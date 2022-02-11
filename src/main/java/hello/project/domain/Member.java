@@ -9,8 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +34,10 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "locker_id")
     private Locker locker;
+
+    @ManyToMany
+    @JoinTable(name = "member_product")
+    private List<Product> products = new ArrayList<>();
 
     protected Member() {
     }
