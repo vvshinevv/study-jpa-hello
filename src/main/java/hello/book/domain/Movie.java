@@ -1,4 +1,4 @@
-package hello.domain;
+package hello.book.domain;
 
 import lombok.Getter;
 import lombok.Setter;

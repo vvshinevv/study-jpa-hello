@@ -1,6 +1,6 @@
 package hello;
 
-import hello.domain.Movie;
+import hello.book.domain.Movie;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
