@@ -1,6 +1,7 @@
 package hello;
 
-import hello.domain.Movie;
+import hello.project.domain.Member;
+import hello.project.domain.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,13 +17,18 @@ public class HelloMain {
         tx.begin();
 
         try {
-            Movie movie = new Movie("book name1", 10000, "director1", "actor1");
-            em.persist(movie);
-            em.flush();
-            em.clear();
 
-            Movie findMove = em.find(Movie.class, movie.getId());
-            System.out.println("findMovie = " + findMove);
+            Team teamA = new Team("teamA");
+            em.persist(teamA);
+
+            Member member1 = new Member("member1");
+            em.persist(member1);
+
+            Member member2 = new Member("member2");
+            em.persist(member2);
+
+            teamA.addMembers(member1);
+            teamA.addMembers(member2);
 
             tx.commit();
         } catch (Exception e) {
