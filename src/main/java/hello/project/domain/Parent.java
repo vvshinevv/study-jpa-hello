@@ -2,7 +2,9 @@ package hello.project.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,27 +16,30 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @Entity
-public class Team {
+public class Parent {
     @Id
-    @Column(name = "team_id")
+    @Column(name = "parent_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "team")
-    private List<Member> members = new ArrayList<>();
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private List<Child> children = new ArrayList<>();
 
-    protected Team() {
-
+    protected Parent() {
     }
 
-    public Team(String name) {
+    public Parent(String name) {
         this.name = name;
     }
 
-    public void addMembers(Member member) {
-        this.members.add(member);
+    public void addChildren(Child child) {
+        this.children.add(child);
+        if (child.getParent() != this) {
+            child.setParent(this);
+        }
     }
 }

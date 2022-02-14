@@ -1,8 +1,5 @@
 package hello;
 
-import hello.project.domain.Member;
-import hello.project.domain.Team;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -17,20 +14,10 @@ public class HelloMain {
         tx.begin();
 
         try {
-            Member member = new Member("member name");
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-
-            Member findMember = em.getReference(Member.class, member.getId());
-            System.out.println("==============================");
-            System.out.println("findId = " + findMember.getId());
-            System.out.println("findMember = " + findMember.getUsername());
-
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
+            e.printStackTrace();
         } finally {
             em.close();
             emf.close();
