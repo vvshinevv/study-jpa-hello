@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class HelloMain {
     public static void main(String[] args) {
@@ -17,19 +18,33 @@ public class HelloMain {
         tx.begin();
 
         try {
-            Team team = new Team("team name");
-            em.persist(team);
+            Team teamA = new Team("teamA");
+            em.persist(teamA);
 
-            Member member = new Member("member name");
-            member.setTeam(team);
-            em.persist(member);
+            Team teamB = new Team("teamB");
+            em.persist(teamB);
+
+            Team teamC = new Team("teamC");
+            em.persist(teamC);
+
+            Member member1 = new Member("member1");
+            member1.setTeam(teamA);
+            em.persist(member1);
+
+            Member member2 = new Member("member2");
+            member2.setTeam(teamB);
+            em.persist(member2);
+
+            Member member3 = new Member("member3");
+            member3.setTeam(teamC);
+            em.persist(member3);
 
             em.flush();
             em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
-            System.out.println("findMember -> Team :: " + findMember.getTeam().getClass());
-            System.out.println("====");
+            List<Member> findMembers = em.createQuery("select m from Member m", Member.class).getResultList();
+            // select * from Member; -> eager 라서 team 도 가져온다...
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
