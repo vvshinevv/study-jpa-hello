@@ -17,18 +17,16 @@ public class HelloMain {
         tx.begin();
 
         try {
+            Member member = new Member("member name");
+            em.persist(member);
 
-            Team teamA = new Team("teamA");
-            em.persist(teamA);
+            em.flush();
+            em.clear();
 
-            Member member1 = new Member("member1");
-            em.persist(member1);
-
-            Member member2 = new Member("member2");
-            em.persist(member2);
-
-            teamA.addMembers(member1);
-            teamA.addMembers(member2);
+            Member findMember = em.getReference(Member.class, member.getId());
+            System.out.println("==============================");
+            System.out.println("findId = " + findMember.getId());
+            System.out.println("findMember = " + findMember.getUsername());
 
             tx.commit();
         } catch (Exception e) {
